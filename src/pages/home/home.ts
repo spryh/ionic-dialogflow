@@ -35,7 +35,11 @@ export class HomePage {
         query: this.inputText
       },
       response => {
-        alert(JSON.stringify(response))
+        alert(JSON.stringify(response.result.fulfillment.speech))
+        this.messageArr.push({
+          msgText: response.result.fulfillment.speech,
+          msgSender: 'api'
+        })
       },
       error => {
         alert(JSON.stringify(error))
