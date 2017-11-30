@@ -8,21 +8,28 @@ declare var window
   templateUrl: 'home.html'
 })
 export class HomePage {
-  messages: any[] = []
+  messageArr: any[] = []
   inputText: string = '' // bind with ngModel on home.html
 
   constructor(public navCtrl: NavController) {
-    this.messages.push({
-      text: 'Hi, how can I help you?',
-      sender: 'api'
+    this.messageArr.push({
+      msgText: 'Hi, how can I help you?',
+      msgSender: 'api'
     })
 
-    this.messages.push({
-      text: this.inputText,
-      sender: 'me'
-    })
+    
   }
   sendText() {
+
+    let messsageSend = this.inputText
+
+    this.messageArr.push({
+      msgText: messsageSend,
+      msgSender: 'me'
+    })
+    // Clear the local variable
+    messsageSend = ''
+
     window['ApiAIPlugin'].requestText(
       {
         query: this.inputText
