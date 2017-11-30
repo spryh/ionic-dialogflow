@@ -1,5 +1,6 @@
 import { Component, NgZone } from '@angular/core'
 import { NavController } from 'ionic-angular'
+import { TextToSpeech } from '@ionic-native/text-to-speech'
 
 declare var window
 
@@ -11,7 +12,11 @@ export class HomePage {
   messageArr: any[] = []
   inputText: string = '' // bind with ngModel on home.html
 
-  constructor(public navCtrl: NavController, public ngZone: NgZone) {
+  constructor(
+    public navCtrl: NavController,
+    public ngZone: NgZone,
+    private tts: TextToSpeech
+  ) {
     this.messageArr.push({
       msgText: 'Hi, how can I help you?',
       msgSender: 'api'
@@ -45,13 +50,19 @@ export class HomePage {
     )
   }
 
-  sendVoice(){
-    window['ApiAIPlugin'].requestVoice({},
+  sendVoice() {
+    window['ApiAIPlugin'].requestVoice(
+      {},
       response => {
-        alert(response.result.fulfillment.speech)
+        this.tts.speak({
+          text: response.result.fulfillment.speech,
+          locale: 'en-US',
+          rate: 1
+        })
       },
       error => {
         alert(JSON.stringify(error))
       }
-    )}
+    )
+  }
 }
