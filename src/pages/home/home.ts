@@ -1,5 +1,5 @@
-import { Component, NgZone } from '@angular/core'
-import { NavController } from 'ionic-angular'
+import { Component, NgZone, ViewChild } from '@angular/core'
+import { NavController, Content} from 'ionic-angular'
 import { TextToSpeech } from '@ionic-native/text-to-speech'
 
 declare var window
@@ -8,20 +8,29 @@ declare var window
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
   messageArr: any[] = []
   inputText: string = '' // bind with ngModel on home.html
+  @ViewChild(Content) content: Content
 
   constructor(
     public navCtrl: NavController,
     public ngZone: NgZone,
     private tts: TextToSpeech
   ) {
+    
     this.messageArr.push({
       msgText: 'Hi, how can I help you?',
       msgSender: 'api'
     })
+    this.tts.speak({
+      text: 'Hi, how can I help you?',
+      locale: 'en-US',
+      rate: 1
+    })
   }
+
   sendText() {
     let messsageSend = this.inputText
 
@@ -29,6 +38,8 @@ export class HomePage {
       msgText: messsageSend,
       msgSender: 'me'
     })
+    this.content.scrollToBottom(200)
+
     // Clear the local variable
     messsageSend = ''
 
@@ -42,6 +53,7 @@ export class HomePage {
             msgText: response.result.fulfillment.speech,
             msgSender: 'api'
           })
+        this.content.scrollToBottom(200)
         })
       },
       error => {
@@ -58,6 +70,13 @@ export class HomePage {
           text: response.result.fulfillment.speech,
           locale: 'en-US',
           rate: 1
+        })
+        this.ngZone.run(() => {
+          this.messageArr.push({
+            msgText: response.result.fulfillment.speech,
+            msgSender: 'api'
+          })
+        this.content.scrollToBottom(200)
         })
       },
       error => {
