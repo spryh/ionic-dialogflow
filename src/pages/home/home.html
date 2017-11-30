@@ -12,7 +12,7 @@
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>
-  
+
   <ion-list no-lines class="chat-list">
     <ion-item *ngFor="let message of messages" class="chat-item">
       <ion-avatar item-left *ngIf="message.sender=='api'">
@@ -22,23 +22,23 @@
         <img src="assets/imgs/ionic-logo.png">
       </ion-avatar>
       <div *ngIf="message.sender=='api'" class="bubble me">
-      <h3>{{message.text}}</h3>
+        <h3>{{message.text}}</h3>
       </div>
       <div *ngIf="message.sender=='me'" class="bubble you">
         <h3>{{message.text}}</h3>
-        </div>
+      </div>
     </ion-item>
   </ion-list>
-  
+
 
   <!-- Removed from Boilerplate-->
 </ion-content>
 <ion-footer>
   <ion-toolbar>
     <ion-item>
-    <ion-input type="text" placeholder="Type your message.."></ion-input>
-    <button ion-button icon-only item-right clear (click)="sendText()">
-      <ion-icon name="send"></ion-icon>
+      <ion-input type="text" placeholder="Type your message.." [(ngModel)]="inputText"></ion-input>
+      <button ion-button icon-only item-right clear (click)="sendText()">
+        <ion-icon name="send"></ion-icon>
       </button>
     </ion-item>
   </ion-toolbar>
