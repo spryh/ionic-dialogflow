@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, NgZone } from '@angular/core'
 import { NavController } from 'ionic-angular'
 
 declare var window
@@ -11,16 +11,13 @@ export class HomePage {
   messageArr: any[] = []
   inputText: string = '' // bind with ngModel on home.html
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public ngZone: NgZone) {
     this.messageArr.push({
       msgText: 'Hi, how can I help you?',
       msgSender: 'api'
     })
-
-    
   }
   sendText() {
-
     let messsageSend = this.inputText
 
     this.messageArr.push({
@@ -35,10 +32,11 @@ export class HomePage {
         query: this.inputText
       },
       response => {
-        alert(JSON.stringify(response.result.fulfillment.speech))
-        this.messageArr.push({
-          msgText: response.result.fulfillment.speech,
-          msgSender: 'api'
+        this.ngZone.run(() => {
+          this.messageArr.push({
+            msgText: response.result.fulfillment.speech,
+            msgSender: 'api'
+          })
         })
       },
       error => {
