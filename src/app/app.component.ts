@@ -29,9 +29,8 @@ export class MyApp {
           clientAccessToken: '3b0c740693694c5cb33d756b58c14da4', // from https://console.dialogflow.com/ Gear icon
           lang: 'en' // set lang tag from list of supported languages
         },
-        function(result) {
-          alert(result)
-        },
+        function(result) {       
+          alert(result)},
         function(error) {
           alert(error)
         }

@@ -44,4 +44,14 @@ export class HomePage {
       }
     )
   }
+
+  sendVoice(){
+    window['ApiAIPlugin'].requestVoice({},
+      response => {
+        alert(response.result.fulfillment.speech)
+      },
+      error => {
+        alert(JSON.stringify(error))
+      }
+    )}
 }
