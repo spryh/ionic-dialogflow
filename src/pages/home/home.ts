@@ -21,12 +21,12 @@ export class HomePage {
   ) {
     
     this.messageArr.push({
-      msgText: 'Hi, how can I help you?',
+      msgText: 'Hey there! I can check wait times for you at Disney\'s parks. Just ask me \"What parks?\"',
       msgSender: 'api'
     })
     this.tts.speak({
-      text: 'Hi, how can I help you?',
-      locale: 'en-US',
+      text: 'Hey there! I can check wait times for you at Disney\'s parks. Just ask me \"What parks?\"',
+      locale: 'en-CA',
       rate: 1
     })
   }
@@ -41,11 +41,11 @@ export class HomePage {
     this.content.scrollToBottom(200)
 
     // Clear the local variable
-    messsageSend = ''
+    this.inputText = ''
 
     window['ApiAIPlugin'].requestText(
       {
-        query: this.inputText
+        query: messsageSend//this.inputText
       },
       response => {
         this.ngZone.run(() => {
@@ -68,10 +68,14 @@ export class HomePage {
       response => {
         this.tts.speak({
           text: response.result.fulfillment.speech,
-          locale: 'en-US',
+          locale: 'en-CA',
           rate: 1
         })
         this.ngZone.run(() => {
+          this.messageArr.push({
+            msgText: response.result.resolvedQuery,
+            msgSender: 'me'
+          })
           this.messageArr.push({
             msgText: response.result.fulfillment.speech,
             msgSender: 'api'

@@ -22,18 +22,18 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault()
-      splashScreen.hide()
+      splashScreen.hide() //show() 
 
       window['ApiAIPlugin'].init(
         {
           clientAccessToken: '3b0c740693694c5cb33d756b58c14da4', // from https://console.dialogflow.com/ Gear icon
           lang: 'en' // set lang tag from list of supported languages
         },
-        function(result) {       
-          alert(result)},
-        function(error) {
-          alert(error)
-        }
+        //function(result) {       //Remove the alerting for startup
+          //alert(result)},
+        // function(error) {
+        //   alert(error)
+        // }
       )
     })
   }
